@@ -26,10 +26,11 @@
 
 // ! Scope (var)
 
-var newWord = "hello";
+let newWord = "hello";
 const testScope = () => {
   newWord = "goodbye";
 };
+
 testScope();
 console.log(newWord);
 
