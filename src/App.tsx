@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Book from "./components/Book";
 import Counter from "./components/Counter";
+import MyForm from "./components/MyForm";
 import Name from "./components/Name";
 
 const App = () => {
@@ -13,6 +14,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <h3>Form</h3>
+      <MyForm />
+
       <h3>Book</h3>
       <Book isbn="9781484201497" />
       <h3>Rest</h3>
@@ -25,7 +29,7 @@ const App = () => {
       </button>
 
       {showCounter ? <Counter /> : null}
-      {/* {<Counter />} */}
+
       {names.map((name) => {
         return <Name key={name}>{name}</Name>;
       })}

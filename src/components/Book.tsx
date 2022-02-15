@@ -1,27 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
-
-//
-interface BookI {
-  isbn: string;
-  title?: string;
-  subtitle?: string;
-  numPages?: number;
-}
+import React from "react";
+import useBook from "../hooks/useBook";
+import { BookI } from "../models/Book";
 
 type BookProps = Pick<BookI, "isbn">;
 
+type UseBookHook = (BookI | (() => Promise<void>) | undefined)[];
+
+type MyArray = (string | number)[];
+
 const Book: React.VFC<BookProps> = ({ isbn }) => {
-  const [book, setBook] = useState<BookI | undefined>();
-
-  const fetchData = useCallback(async () => {
-    const response = await fetch(`http://localhost:4730/books/${isbn}`);
-    const data = await response.json();
-    setBook(data);
-  }, [isbn]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const [book, fetchData] = useBook(isbn);
 
   return book ? (
     <>
@@ -30,7 +18,7 @@ const Book: React.VFC<BookProps> = ({ isbn }) => {
       <div>Pages: {book.numPages}</div>
     </>
   ) : (
-    <span>...loading</span>
+    <span onClick={fetchData}>...loading</span>
   );
 };
 
