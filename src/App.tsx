@@ -27,8 +27,11 @@ const App = () => {
           <Route exact path="/">
             <div>Home Screen</div>
           </Route>
-          <Route strict path="/playground/">
+          <Route path="/playground">
             <Playground />
+          </Route>
+          <Route path="/books/:isbn">
+            <div>Book Detail</div>
           </Route>
           <Route path="/books">
             <Books />

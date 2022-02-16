@@ -1,16 +1,13 @@
 import React from "react";
-import useBook from "../hooks/useBook";
 import { BookI } from "../models/Book";
 
-type BookProps = Pick<BookI, "isbn">;
+// type BookProps = Pick<BookI, "isbn"> & { onFetchFinished: () => void };
+type BookProps = {
+  book: BookI | undefined;
+  fetchData: () => void;
+};
 
-type UseBookHook = (BookI | (() => Promise<void>) | undefined)[];
-
-type MyArray = (string | number)[];
-
-const Book: React.VFC<BookProps> = ({ isbn }) => {
-  const [book, fetchData] = useBook(isbn);
-
+const Book: React.VFC<BookProps> = ({ book, fetchData }) => {
   return book ? (
     <>
       <div>Title: {book.title}</div>
