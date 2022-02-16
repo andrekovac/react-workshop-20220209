@@ -1,33 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { Action, Dispatch } from "@reduxjs/toolkit";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreT } from "../store";
+import { increment, decrement } from "../store/slices/count";
 
 const Counter: React.VFC = () => {
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState<string | number>("foo");
+  // selector returns a slice of the entire redux store
+  const count = useSelector<StoreT>((state) => state.count);
+  const dispatch = useDispatch<Dispatch<Action>>();
 
-  useEffect(() => {
-    console.log("effect");
-    // subscribed
+  const incrementCount = () => dispatch(increment());
+  const decrementCount = () => dispatch(decrement());
 
-    // return () => {
-    //   console.log("clean up");
-    //   // unsubscribed
-    // };
-  }, [value]); // {} === {}
+  // { type: 'count/decrement' }
 
-  const incrementCount = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    setCount(count + 1);
-    console.log(count);
-    if (count > 5) {
-      // bar -> bar
-      setValue("bar");
-    }
-  };
-
-  console.log("render");
-
-  return <button onClick={incrementCount}>{`Count: ${count}`}</button>;
+  return (
+    <React.Fragment>
+      <button onClick={incrementCount}>{`Count: ${count}`}</button>;
+      <button onClick={decrementCount}>{"Decrement"}</button>;
+    </React.Fragment>
+  );
 };
 
 export default Counter;
